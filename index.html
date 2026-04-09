@@ -39,7 +39,7 @@
         .container {
             background-color: var(--card-bg);
             padding: 2.5rem;
-            border-radius: 40px; /* Tam yuvarlak köşeler */
+            border-radius: 40px;
             box-shadow: var(--shadow);
             width: 90%;
             max-width: 400px;
@@ -55,7 +55,7 @@
         input {
             width: 100%;
             padding: 15px 25px;
-            border-radius: 50px; /* Inputlar tamamen yuvarlak */
+            border-radius: 50px;
             border: none;
             background: var(--input-bg);
             color: var(--text-color);
@@ -150,12 +150,11 @@
     </div>
 
     <div id="resultBox" class="result">
-        Hesaplamak için değerleri gir knk...
+        Hesaplamak için değerleri giriniz...
     </div>
 </div>
 
 <script>
-    // Sayfa yüklendiğinde temayı hatırla
     const currentTheme = localStorage.getItem('theme') || 'light';
     if (currentTheme === 'dark') {
         document.body.setAttribute('data-theme', 'dark');
