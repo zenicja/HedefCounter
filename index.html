@@ -121,15 +121,27 @@
         }
 
         .theme-toggle:hover { transform: rotate(15deg); }
+
+        /* Konfeti canvas - ekranı tamamen kaplar, tıklamaları geçirir */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
     </style>
 </head>
 <body>
 
+<canvas id="confetti-canvas"></canvas>
 <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()">🌙</button>
 
 <div class="container">
     <h2>HedefCounter</h2>
-    
+
     <div class="input-group">
         <label>🎯 Hedef Tutar</label>
         <input type="number" id="target" placeholder="15000" oninput="calculate()">
@@ -155,6 +167,7 @@
 </div>
 
 <script>
+    /* ── Tema ── */
     const currentTheme = localStorage.getItem('theme') || 'light';
     if (currentTheme === 'dark') {
         document.body.setAttribute('data-theme', 'dark');
@@ -164,7 +177,6 @@
     function toggleTheme() {
         const body = document.body;
         const btn = document.getElementById('themeBtn');
-        
         if (body.hasAttribute('data-theme')) {
             body.removeAttribute('data-theme');
             btn.innerText = '🌙';
@@ -176,28 +188,119 @@
         }
     }
 
+    const canvas = document.getElementById('confetti-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let animationId = null;
+
+    const COLORS = ['#00b894','#55efc4','#fdcb6e','#e17055','#6c5ce7','#fd79a8','#0984e3'];
+
+    function resizeCanvas() {
+        canvas.width  = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    function createParticle(x, y) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 8 + 3;
+        return {
+            x, y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed - 6,
+            color: COLORS[Math.floor(Math.random() * COLORS.length)],
+            width:  Math.random() * 10 + 6,
+            height: Math.random() * 6  + 4,
+            rotation: Math.random() * 360,
+            rotSpeed: (Math.random() - 0.5) * 8,
+            alpha: 1,
+            gravity: 0.25
+        };
+    }
+
+    function spawnBurst(count) {
+        const cx = canvas.width  / 2;
+        const cy = canvas.height / 2;
+        for (let i = 0; i < count; i++) {
+            particles.push(createParticle(
+                cx + (Math.random() - 0.5) * 100,
+                cy + (Math.random() - 0.5) * 100
+            ));
+        }
+        for (let i = 0; i < count / 3; i++) {
+            particles.push(createParticle(0,            canvas.height * 0.7));
+            particles.push(createParticle(canvas.width, canvas.height * 0.7));
+        }
+    }
+
+    function animateConfetti() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles = particles.filter(p => p.alpha > 0.05);
+
+        for (const p of particles) {
+            p.x  += p.vx;
+            p.y  += p.vy;
+            p.vy += p.gravity;
+            p.vx *= 0.99;
+            p.rotation += p.rotSpeed;
+            if (p.y > canvas.height * 0.6) p.alpha -= 0.02;
+
+            ctx.save();
+            ctx.globalAlpha = p.alpha;
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.rotation * Math.PI / 180);
+            ctx.fillStyle = p.color;
+            ctx.fillRect(-p.width / 2, -p.height / 2, p.width, p.height);
+            ctx.restore();
+        }
+
+        if (particles.length > 0) {
+            animationId = requestAnimationFrame(animateConfetti);
+        } else {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+    }
+
+    function fireConfetti() {
+        if (animationId) cancelAnimationFrame(animationId);
+        particles = [];
+        spawnBurst(180);
+        animateConfetti();
+    }
+
+    let goalCompleted = false;
+
     function calculate() {
-        const target = parseFloat(document.getElementById('target').value);
+        const target  = parseFloat(document.getElementById('target').value);
         const current = parseFloat(document.getElementById('current').value);
-        const daily = parseFloat(document.getElementById('daily').value);
-        
+        const daily   = parseFloat(document.getElementById('daily').value);
+
         if (target > 0 && current >= 0) {
             let percent = (current / target) * 100;
             if (percent > 100) percent = 100;
-            
+
             const bar = document.getElementById('bar');
             bar.style.width = percent.toFixed(1) + '%';
-            bar.innerText = percent > 10 ? '%' + percent.toFixed(1) : '';
+            bar.innerText   = percent > 10 ? '%' + percent.toFixed(1) : '';
 
             const remaining = target - current;
-            if (remaining > 0 && daily > 0) {
-                const days = Math.ceil(remaining / daily);
-                const months = (days / 30).toFixed(1);
-                document.getElementById('resultBox').innerHTML = 
-                    `Kalan: <b>${remaining.toLocaleString()} TL</b><br>` +
-                    `<b>${days} gün</b> (~${months} ay) kaldı.`;
-            } else if (remaining <= 0) {
-                document.getElementById('resultBox').innerHTML = "<b>Hedef Tamamlandı! 🎉</b>";
+
+            if (remaining <= 0) {
+                document.getElementById('resultBox').innerHTML = '<b>Hedef Tamamlandı! 🎉</b>';
+                if (!goalCompleted) {
+                    goalCompleted = true;
+                    fireConfetti();
+                }
+            } else {
+                goalCompleted = false;
+                if (daily > 0) {
+                    const days   = Math.ceil(remaining / daily);
+                    const months = (days / 30).toFixed(1);
+                    document.getElementById('resultBox').innerHTML =
+                        `Kalan: <b>${remaining.toLocaleString()} TL</b><br>` +
+                        `<b>${days} gün</b> (~${months} ay) kaldı.`;
+                }
             }
         }
     }
