@@ -78,10 +78,18 @@
             position: relative;
         }
 
+        @keyframes rainbow {
+            0%   { background-position: 0% 50%; }
+            50%  { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         .progress-bar {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, var(--accent-color), #55efc4);
+            background: linear-gradient(90deg, #ff6b6b, #ffd93d, #6bcb77, #4d96ff, #c77dff, #ff6b6b);
+            background-size: 300% 300%;
+            animation: rainbow 3s ease infinite;
             transition: width 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             border-radius: 50px;
             display: flex;
@@ -90,6 +98,7 @@
             color: white;
             font-size: 0.8rem;
             font-weight: bold;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.25);
         }
 
         .result {
@@ -121,6 +130,34 @@
         }
 
         .theme-toggle:hover { transform: rotate(15deg); }
+
+        .mode-toggle {
+            display: flex;
+            background: var(--input-bg);
+            border-radius: 50px;
+            padding: 5px;
+            gap: 4px;
+        }
+
+        .mode-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 50px;
+            border: none;
+            background: transparent;
+            color: var(--text-color);
+            font-family: inherit;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: background 0.25s, color 0.25s;
+            opacity: 0.6;
+        }
+
+        .mode-btn.active {
+            background: var(--card-bg);
+            opacity: 1;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
 
         .milestones {
             display: flex;
@@ -205,12 +242,25 @@
     </div>
 
     <div class="input-group">
-        <label>🗓️ Günlük Birikim</label>
+        <label>🗓️ Mod</label>
+        <div class="mode-toggle">
+            <button class="mode-btn active" id="btnDaily" onclick="setMode('daily')">Günlük Birikim</button>
+            <button class="mode-btn" id="btnDate" onclick="setMode('date')">Hedef Tarihi</button>
+        </div>
+    </div>
+
+    <div class="input-group" id="dailyGroup">
+        <label>💸 Günlük Birikim</label>
         <input type="number" id="daily" value="125" oninput="calculate()">
     </div>
 
+    <div class="input-group" id="dateGroup" style="display:none;">
+        <label>📅 Hedef Tarihi</label>
+        <input type="date" id="targetDate" oninput="calculate()">
+    </div>
+
     <div class="progress-container">
-        <div id="bar" class="progress-bar">0%</div>
+        <div id="bar" class="progress-bar"></div>
     </div>
 
     <div id="milestones" class="milestones">
@@ -238,7 +288,6 @@
 </div>
 
 <script>
-    /* ── Tema ── */
     const currentTheme = localStorage.getItem('theme') || 'light';
     if (currentTheme === 'dark') {
         document.body.setAttribute('data-theme', 'dark');
@@ -376,41 +425,73 @@
         });
     }
 
+    let currentMode = 'daily';
+
+    function setMode(mode) {
+        currentMode = mode;
+        document.getElementById('dailyGroup').style.display = mode === 'daily' ? 'block' : 'none';
+        document.getElementById('dateGroup').style.display  = mode === 'date'  ? 'block' : 'none';
+        document.getElementById('btnDaily').classList.toggle('active', mode === 'daily');
+        document.getElementById('btnDate').classList.toggle('active',  mode === 'date');
+        calculate();
+    }
+
     let goalCompleted = false;
 
     function calculate() {
         const target  = parseFloat(document.getElementById('target').value);
         const current = parseFloat(document.getElementById('current').value);
-        const daily   = parseFloat(document.getElementById('daily').value);
 
-        if (target > 0 && current >= 0) {
-            let percent = (current / target) * 100;
-            if (percent > 100) percent = 100;
+        if (!(target > 0 && current >= 0)) return;
 
-            const bar = document.getElementById('bar');
-            bar.style.width = percent.toFixed(1) + '%';
-            bar.innerText   = percent > 10 ? '%' + percent.toFixed(1) : '';
+        let percent = Math.min((current / target) * 100, 100);
 
-            updateBadges(percent);
+        const bar = document.getElementById('bar');
+        bar.style.width = percent.toFixed(1) + '%';
+        bar.innerText   = percent > 10 ? '%' + percent.toFixed(1) : '';
 
-            const remaining = target - current;
+        updateBadges(percent);
 
-            if (remaining <= 0) {
-                document.getElementById('resultBox').innerHTML = '<b>Hedef Tamamlandı! 🎉</b>';
-                if (!goalCompleted) {
-                    goalCompleted = true;
-                    fireConfetti();
-                }
-            } else {
-                goalCompleted = false;
-                if (daily > 0) {
-                    const days   = Math.ceil(remaining / daily);
-                    const months = (days / 30).toFixed(1);
-                    document.getElementById('resultBox').innerHTML =
-                        `Kalan: <b>${remaining.toLocaleString()} TL</b><br>` +
-                        `<b>${days} gün</b> (~${months} ay) kaldı.`;
-                }
+        const remaining = target - current;
+
+        if (remaining <= 0) {
+            document.getElementById('resultBox').innerHTML = '<b>Hedef Tamamlandı! 🎉</b>';
+            if (!goalCompleted) {
+                goalCompleted = true;
+                fireConfetti();
             }
+            return;
+        }
+
+        goalCompleted = false;
+
+        if (currentMode === 'daily') {
+            const daily = parseFloat(document.getElementById('daily').value);
+            if (daily > 0) {
+                const days   = Math.ceil(remaining / daily);
+                const months = (days / 30).toFixed(1);
+                const arrival = new Date();
+                arrival.setDate(arrival.getDate() + days);
+                const arrivalStr = arrival.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
+                document.getElementById('resultBox').innerHTML =
+                    `Kalan: <b>${remaining.toLocaleString()} TL</b><br>` +
+                    `<b>${days} gün</b> (~${months} ay) · ${arrivalStr}`;
+            }
+        } else {
+            const dateVal = document.getElementById('targetDate').value;
+            if (!dateVal) return;
+            const today  = new Date(); today.setHours(0,0,0,0);
+            const target_date = new Date(dateVal);
+            const days   = Math.round((target_date - today) / 86400000);
+            if (days <= 0) {
+                document.getElementById('resultBox').innerHTML = '<b>Tarih geçmiş! 📅</b>';
+                return;
+            }
+            const dailyNeeded = (remaining / days).toFixed(2);
+            const months = (days / 30).toFixed(1);
+            document.getElementById('resultBox').innerHTML =
+                `Kalan: <b>${remaining.toLocaleString()} TL</b><br>` +
+                `<b>${days} gün</b> (~${months} ay) · Günlük <b>${parseFloat(dailyNeeded).toLocaleString()} TL</b> biriktirmen gerekiyor`;
         }
     }
 </script>
