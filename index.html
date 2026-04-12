@@ -4,78 +4,152 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HedefCounter</title>
-    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-color: #f8f9fa;
-            --card-bg: #ffffff;
-            --text-color: #2d3436;
-            --accent-color: #00b894;
-            --input-bg: #f1f3f5;
-            --shadow: 0 15px 35px rgba(0,0,0,0.05);
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap');
 
-        [data-theme="dark"] {
-            --bg-color: #0f0f0f;
-            --card-bg: #1a1a1a;
-            --text-color: #f5f5f5;
-            --accent-color: #00d2a0;
-            --input-bg: #2d2d2d;
-            --shadow: 0 15px 35px rgba(0,0,0,0.3);
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: 'Comfortaa', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            transition: background 0.4s ease;
+            padding: 2rem 1rem;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 70%, #533483 100%);
+            background-attachment: fixed;
+            transition: background 0.6s ease;
+        }
+
+        body.light-mode {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 40%, #d299c2 70%, #fef9d7 100%);
+        }
+
+        @keyframes bgShift {
+            0%   { background-position: 0% 50%; }
+            50%  { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.25;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .blob-1 { width: 400px; height: 400px; background: #7c3aed; top: -100px; left: -100px; animation: blobFloat 8s ease-in-out infinite; }
+        .blob-2 { width: 300px; height: 300px; background: #06b6d4; bottom: -80px; right: -80px; animation: blobFloat 10s ease-in-out infinite reverse; }
+        .blob-3 { width: 250px; height: 250px; background: #ec4899; top: 50%; left: 60%; animation: blobFloat 12s ease-in-out infinite 2s; }
+
+        @keyframes blobFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33%       { transform: translate(20px, -20px) scale(1.05); }
+            66%       { transform: translate(-15px, 15px) scale(0.95); }
         }
 
         .container {
-            background-color: var(--card-bg);
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             padding: 2.5rem;
-            border-radius: 40px;
-            box-shadow: var(--shadow);
+            border-radius: 32px;
             width: 90%;
-            max-width: 400px;
+            max-width: 420px;
             text-align: center;
+            color: #fff;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
         }
 
-        h2 { font-weight: 700; margin-bottom: 1.5rem; }
+        body.light-mode .container {
+            background: rgba(255, 255, 255, 0.45);
+            border-color: rgba(255, 255, 255, 0.6);
+            color: #1e1b4b;
+            box-shadow: 0 25px 60px rgba(100,80,200,0.15), inset 0 1px 0 rgba(255,255,255,0.8);
+        }
 
-        .input-group { margin-bottom: 1.2rem; text-align: left; }
+        h2 {
+            font-weight: 700;
+            font-size: 1.6rem;
+            margin-bottom: 1.8rem;
+            letter-spacing: 0.02em;
+            color: #fff;
+        }
 
-        label { display: block; margin-left: 15px; margin-bottom: 8px; font-size: 0.85rem; opacity: 0.8; }
+        body.light-mode h2 { color: #1e1b4b; }
 
-        input {
+        .input-group { margin-bottom: 1.1rem; text-align: left; }
+
+        label {
+            display: block;
+            margin-left: 14px;
+            margin-bottom: 7px;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.65);
+            letter-spacing: 0.03em;
+        }
+
+        body.light-mode label { color: rgba(30,27,75,0.6); }
+
+        input[type="number"],
+        input[type="date"] {
             width: 100%;
-            padding: 15px 25px;
+            padding: 14px 22px;
             border-radius: 50px;
-            border: none;
-            background: var(--input-bg);
-            color: var(--text-color);
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.1);
+            color: #fff;
             font-family: inherit;
             font-size: 1rem;
-            box-sizing: border-box;
             outline: none;
-            transition: transform 0.2s;
+            transition: background 0.3s, border-color 0.3s, transform 0.2s, box-shadow 0.3s;
         }
 
-        input:focus { transform: scale(1.02); }
+        body.light-mode input[type="number"],
+        body.light-mode input[type="date"] {
+            background: rgba(255,255,255,0.55);
+            border-color: rgba(100,80,200,0.2);
+            color: #1e1b4b;
+        }
+
+        input[type="number"]::placeholder { color: rgba(255,255,255,0.35); }
+        body.light-mode input[type="number"]::placeholder { color: rgba(30,27,75,0.35); }
+
+        input[type="number"]:focus,
+        input[type="date"]:focus {
+            background: rgba(255,255,255,0.18);
+            border-color: rgba(167,139,250,0.7);
+            box-shadow: 0 0 0 3px rgba(167,139,250,0.2);
+            transform: scale(1.02);
+        }
+
+        body.light-mode input[type="number"]:focus,
+        body.light-mode input[type="date"]:focus {
+            background: rgba(255,255,255,0.8);
+            border-color: rgba(124,58,237,0.5);
+            box-shadow: 0 0 0 3px rgba(124,58,237,0.15);
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); opacity: 0.6; cursor: pointer; }
+        body.light-mode input[type="date"]::-webkit-calendar-picker-indicator { filter: none; opacity: 0.5; }
 
         .progress-container {
-            background: var(--input-bg);
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 50px;
-            height: 35px;
+            height: 36px;
             width: 100%;
-            margin: 25px 0;
+            margin: 22px 0;
             overflow: hidden;
-            position: relative;
+        }
+
+        body.light-mode .progress-container {
+            background: rgba(255,255,255,0.4);
+            border-color: rgba(100,80,200,0.15);
         }
 
         @keyframes rainbow {
@@ -98,95 +172,119 @@
             color: white;
             font-size: 0.8rem;
             font-weight: bold;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.25);
+            text-shadow: 0 1px 4px rgba(0,0,0,0.3);
         }
 
         .result {
-            margin-top: 15px;
-            padding: 15px;
-            border-radius: 30px;
-            background: var(--input-bg);
+            margin-top: 12px;
+            padding: 14px 18px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1);
             font-size: 0.9rem;
-            line-height: 1.5;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.9);
+        }
+
+        body.light-mode .result {
+            background: rgba(255,255,255,0.4);
+            border-color: rgba(100,80,200,0.15);
+            color: #1e1b4b;
         }
 
         .theme-toggle {
             position: fixed;
-            top: 25px;
-            right: 25px;
+            top: 22px;
+            right: 22px;
+            z-index: 10;
             cursor: pointer;
-            width: 50px;
-            height: 50px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
-            border: none;
-            background: var(--card-bg);
-            color: var(--text-color);
-            box-shadow: var(--shadow);
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(12px);
+            color: #fff;
             font-size: 1.2rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: 0.3s;
+            transition: transform 0.3s, background 0.3s;
         }
 
-        .theme-toggle:hover { transform: rotate(15deg); }
+        body.light-mode .theme-toggle {
+            border-color: rgba(100,80,200,0.2);
+            background: rgba(255,255,255,0.5);
+            color: #1e1b4b;
+        }
+
+        .theme-toggle:hover { transform: rotate(20deg) scale(1.1); }
 
         .mode-toggle {
             display: flex;
-            background: var(--input-bg);
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 50px;
-            padding: 5px;
+            padding: 4px;
             gap: 4px;
+        }
+
+        body.light-mode .mode-toggle {
+            background: rgba(255,255,255,0.4);
+            border-color: rgba(100,80,200,0.15);
         }
 
         .mode-btn {
             flex: 1;
-            padding: 10px;
+            padding: 9px;
             border-radius: 50px;
             border: none;
             background: transparent;
-            color: var(--text-color);
+            color: rgba(255,255,255,0.5);
             font-family: inherit;
             font-size: 0.8rem;
             cursor: pointer;
             transition: background 0.25s, color 0.25s;
-            opacity: 0.6;
         }
 
+        body.light-mode .mode-btn { color: rgba(30,27,75,0.45); }
+
         .mode-btn.active {
-            background: var(--card-bg);
-            opacity: 1;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            background: rgba(255,255,255,0.18);
+            color: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        }
+
+        body.light-mode .mode-btn.active {
+            background: rgba(255,255,255,0.75);
+            color: #1e1b4b;
         }
 
         .weekend-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: var(--input-bg);
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 50px;
-            padding: 12px 22px;
+            padding: 11px 20px;
         }
 
-        .weekend-label {
-            font-size: 0.85rem;
-            opacity: 0.8;
+        body.light-mode .weekend-row {
+            background: rgba(255,255,255,0.4);
+            border-color: rgba(100,80,200,0.15);
         }
 
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 46px;
-            height: 26px;
-            flex-shrink: 0;
-        }
+        .weekend-label { font-size: 0.82rem; color: rgba(255,255,255,0.7); }
+        body.light-mode .weekend-label { color: rgba(30,27,75,0.65); }
 
+        .switch { position: relative; display: inline-block; width: 46px; height: 26px; flex-shrink: 0; }
         .switch input { opacity: 0; width: 0; height: 0; }
 
         .slider-knob {
             position: absolute;
             inset: 0;
-            background: #ccc;
+            background: rgba(255,255,255,0.2);
             border-radius: 50px;
             cursor: pointer;
             transition: background 0.3s;
@@ -195,27 +293,21 @@
         .slider-knob::before {
             content: '';
             position: absolute;
-            width: 20px;
-            height: 20px;
-            left: 3px;
-            top: 3px;
+            width: 20px; height: 20px;
+            left: 3px; top: 3px;
             background: white;
             border-radius: 50%;
             transition: transform 0.3s;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.2);
         }
 
-        .switch input:checked + .slider-knob {
-            background: var(--accent-color);
-        }
-
-        .switch input:checked + .slider-knob::before {
-            transform: translateX(20px);
-        }
+        .switch input:checked + .slider-knob { background: #a78bfa; }
+        .switch input:checked + .slider-knob::before { transform: translateX(20px); }
 
         .milestones {
             display: flex;
             justify-content: space-between;
-            margin: 0 5px 20px;
+            margin: 0 4px 18px;
         }
 
         .badge-item {
@@ -228,29 +320,26 @@
             transition: opacity 0.5s ease, filter 0.5s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .badge-item.unlocked {
-            opacity: 1;
-            filter: grayscale(0);
-        }
-
-        .badge-item.pop {
-            transform: scale(1.35);
-        }
+        .badge-item.unlocked { opacity: 1; filter: grayscale(0); }
+        .badge-item.pop { transform: scale(1.35); }
 
         .badge-icon { font-size: 1.8rem; line-height: 1; }
-        .badge-label { font-size: 0.7rem; opacity: 0.7; }
+        .badge-label { font-size: 0.68rem; color: rgba(255,255,255,0.6); }
+        body.light-mode .badge-label { color: rgba(30,27,75,0.55); }
 
         .toast {
             position: fixed;
-            bottom: 40px;
+            bottom: 36px;
             left: 50%;
-            transform: translateX(-50%) translateY(20px);
-            background: var(--card-bg);
-            color: var(--text-color);
-            padding: 12px 24px;
+            transform: translateX(-50%) translateY(16px);
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            padding: 11px 22px;
             border-radius: 50px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            font-size: 0.9rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            font-size: 0.88rem;
             font-family: 'Comfortaa', sans-serif;
             opacity: 0;
             transition: opacity 0.3s ease, transform 0.3s ease;
@@ -259,17 +348,12 @@
             z-index: 9998;
         }
 
-        .toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
         #confetti-canvas {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             pointer-events: none;
             z-index: 9999;
         }
@@ -278,6 +362,9 @@
 <body>
 
 <canvas id="confetti-canvas"></canvas>
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
 <div id="toast" class="toast"></div>
 <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()">🌙</button>
 
@@ -351,23 +438,23 @@
 </div>
 
 <script>
-    const currentTheme = localStorage.getItem('theme') || 'light';
-    if (currentTheme === 'dark') {
-        document.body.setAttribute('data-theme', 'dark');
+    const currentTheme = localStorage.getItem('theme') || 'dark';
+    if (currentTheme === 'light') {
+        document.body.classList.add('light-mode');
         document.getElementById('themeBtn').innerText = '☀️';
     }
 
     function toggleTheme() {
         const body = document.body;
         const btn = document.getElementById('themeBtn');
-        if (body.hasAttribute('data-theme')) {
-            body.removeAttribute('data-theme');
+        if (body.classList.contains('light-mode')) {
+            body.classList.remove('light-mode');
             btn.innerText = '🌙';
-            localStorage.setItem('theme', 'light');
-        } else {
-            body.setAttribute('data-theme', 'dark');
-            btn.innerText = '☀️';
             localStorage.setItem('theme', 'dark');
+        } else {
+            body.classList.add('light-mode');
+            btn.innerText = '☀️';
+            localStorage.setItem('theme', 'light');
         }
     }
 
