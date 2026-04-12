@@ -159,6 +159,59 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
+        .weekend-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--input-bg);
+            border-radius: 50px;
+            padding: 12px 22px;
+        }
+
+        .weekend-label {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 46px;
+            height: 26px;
+            flex-shrink: 0;
+        }
+
+        .switch input { opacity: 0; width: 0; height: 0; }
+
+        .slider-knob {
+            position: absolute;
+            inset: 0;
+            background: #ccc;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .slider-knob::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            left: 3px;
+            top: 3px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        .switch input:checked + .slider-knob {
+            background: var(--accent-color);
+        }
+
+        .switch input:checked + .slider-knob::before {
+            transform: translateX(20px);
+        }
+
         .milestones {
             display: flex;
             justify-content: space-between;
@@ -249,8 +302,18 @@
         </div>
     </div>
 
+    <div class="input-group" id="weekendGroup">
+        <div class="weekend-row">
+            <span class="weekend-label">&#128197; Hafta sonları dahil</span>
+            <label class="switch">
+                <input type="checkbox" id="weekendToggle" onchange="calculate()" checked>
+                <span class="slider-knob"></span>
+            </label>
+        </div>
+    </div>
+
     <div class="input-group" id="dailyGroup">
-        <label>💸 Günlük Birikim</label>
+        <label>&#128184; Günlük Birikim</label>
         <input type="number" id="daily" value="125" oninput="calculate()">
     </div>
 
@@ -436,6 +499,28 @@
         calculate();
     }
 
+    function countWeekdays(fromDate, days) {
+        let count = 0;
+        let d = new Date(fromDate);
+        while (count < days) {
+            d.setDate(d.getDate() + 1);
+            const day = d.getDay();
+            if (day !== 0 && day !== 6) count++;
+        }
+        return d;
+    }
+
+    function weekdaysUntil(fromDate, toDate) {
+        let count = 0;
+        let d = new Date(fromDate);
+        while (d < toDate) {
+            d.setDate(d.getDate() + 1);
+            const day = d.getDay();
+            if (day !== 0 && day !== 6) count++;
+        }
+        return count;
+    }
+
     let goalCompleted = false;
 
     function calculate() {
@@ -465,33 +550,63 @@
 
         goalCompleted = false;
 
+        const includeWeekends = document.getElementById('weekendToggle')
+            ? document.getElementById('weekendToggle').checked
+            : true;
+
         if (currentMode === 'daily') {
             const daily = parseFloat(document.getElementById('daily').value);
-            if (daily > 0) {
-                const days   = Math.ceil(remaining / daily);
-                const months = (days / 30).toFixed(1);
-                const arrival = new Date();
-                arrival.setDate(arrival.getDate() + days);
-                const arrivalStr = arrival.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
-                document.getElementById('resultBox').innerHTML =
-                    `Kalan: <b>${remaining.toLocaleString()} TL</b><br>` +
-                    `<b>${days} gün</b> (~${months} ay) · ${arrivalStr}`;
+            if (!(daily > 0)) return;
+
+            const totalDays = Math.ceil(remaining / daily);
+
+            let arrival;
+            let calendarDays;
+
+            if (includeWeekends) {
+                arrival = new Date();
+                arrival.setDate(arrival.getDate() + totalDays);
+                calendarDays = totalDays;
+            } else {
+                const today = new Date(); today.setHours(0,0,0,0);
+                arrival = countWeekdays(today, totalDays);
+                calendarDays = Math.round((arrival - today) / 86400000);
             }
+
+            const months = (calendarDays / 30).toFixed(1);
+            const arrivalStr = arrival.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
+            const weekendNote = includeWeekends ? '' : ' <span style="opacity:0.6;font-size:0.8rem;">(haftaiçi)</span>';
+
+            document.getElementById('resultBox').innerHTML =
+                `Kalan: <b>${remaining.toLocaleString()} TL</b><br>` +
+                `<b>${calendarDays} gün</b> (~${months} ay)${weekendNote} · ${arrivalStr}`;
+
         } else {
             const dateVal = document.getElementById('targetDate').value;
             if (!dateVal) return;
-            const today  = new Date(); today.setHours(0,0,0,0);
-            const target_date = new Date(dateVal);
-            const days   = Math.round((target_date - today) / 86400000);
-            if (days <= 0) {
+            const today = new Date(); today.setHours(0,0,0,0);
+            const targetDate = new Date(dateVal);
+
+            if (targetDate <= today) {
                 document.getElementById('resultBox').innerHTML = '<b>Tarih geçmiş! 📅</b>';
                 return;
             }
-            const dailyNeeded = (remaining / days).toFixed(2);
-            const months = (days / 30).toFixed(1);
+
+            const calendarDays = Math.round((targetDate - today) / 86400000);
+            const activeDays   = includeWeekends ? calendarDays : weekdaysUntil(today, targetDate);
+
+            if (activeDays <= 0) {
+                document.getElementById('resultBox').innerHTML = '<b>Hafta içi gün kalmadı! 📅</b>';
+                return;
+            }
+
+            const dailyNeeded = (remaining / activeDays).toFixed(2);
+            const months = (calendarDays / 30).toFixed(1);
+            const weekendNote = includeWeekends ? '' : ' <span style="opacity:0.6;font-size:0.8rem;">(haftaiçi)</span>';
+
             document.getElementById('resultBox').innerHTML =
                 `Kalan: <b>${remaining.toLocaleString()} TL</b><br>` +
-                `<b>${days} gün</b> (~${months} ay) · Günlük <b>${parseFloat(dailyNeeded).toLocaleString()} TL</b> biriktirmen gerekiyor`;
+                `<b>${calendarDays} gün</b> (~${months} ay) · Günlük${weekendNote} <b>${parseFloat(dailyNeeded).toLocaleString()} TL</b> biriktirmen gerekiyor`;
         }
     }
 </script>
