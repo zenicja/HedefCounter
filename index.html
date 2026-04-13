@@ -175,6 +175,25 @@
             text-shadow: 0 1px 4px rgba(0,0,0,0.3);
         }
 
+        .motivation-box {
+            margin-top: 12px;
+            padding: 12px 18px;
+            border-radius: 20px;
+            background: rgba(167,139,250,0.15);
+            border: 1px solid rgba(167,139,250,0.25);
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: rgba(255,255,255,0.85);
+            font-style: italic;
+            transition: opacity 0.4s ease;
+        }
+
+        body.light-mode .motivation-box {
+            background: rgba(124,58,237,0.08);
+            border-color: rgba(124,58,237,0.2);
+            color: #3b1f8c;
+        }
+
         .result {
             margin-top: 12px;
             padding: 14px 18px;
@@ -432,6 +451,8 @@
         </div>
     </div>
 
+    <div id="motivationBox" class="motivation-box" style="display:none;"></div>
+
     <div id="resultBox" class="result">
         Hesaplamak için değerleri giriniz...
     </div>
@@ -566,6 +587,7 @@
                     unlockedBadges.add(m.id);
                     el.classList.add('pop');
                     showToast(m.msg);
+                    playBadgeSound();
                     setTimeout(() => el.classList.remove('pop'), 400);
                 }
             } else {
@@ -608,6 +630,73 @@
         return count;
     }
 
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playTone(freq, type, duration, vol = 0.18) {
+        const osc  = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+    }
+
+    function playBadgeSound() {
+        playTone(520, 'sine', 0.12);
+        setTimeout(() => playTone(660, 'sine', 0.15), 100);
+        setTimeout(() => playTone(800, 'sine', 0.2),  200);
+    }
+
+    function playGoalSound() {
+        [523, 659, 784, 1047].forEach((f, i) => {
+            setTimeout(() => playTone(f, 'sine', 0.3, 0.2), i * 100);
+        });
+    }
+
+    function resumeAudio() {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+    }
+    document.addEventListener('click', resumeAudio, { once: true });
+    document.addEventListener('input', resumeAudio, { once: true });
+
+    const MOTIVATIONS = {
+        0:  [ "Henüz başlamadın, ilk adım en zor olanı! 💪", "Büyük hedefler küçük adımlarla başlar. Hadi! 🚀", "Bugün biriktirdiğin, yarının özgürlüğü. ✨" ],
+        10: [ "Başladın, bu bile çoğundan iyi! 🔥", "İlk %10 tamam, motor ısındı! 🏎️", "Küçük ama emin adımlar... devam et! 👣" ],
+        25: [ "Çeyrek yolda! Ritmi yakaladın mı? 🎯", "Her gün biraz daha yakınsın. 📈", "Bu tempoda harika gidiyorsun! 💫" ],
+        50: [ "Tam ortasındasın! Artık geri dönüş yok 😄", "Yarı yol tamam, ivme sende! ⚡", "50% — bugüne kadar harika iş çıkardın! 🌟" ],
+        75: [ "Son çeyrek! Neredeyse bitirdin 🥇", "Bu noktaya gelmek çok şey gerektirir, tebrikler! 🎖️", "%75 — artık hayal değil, gerçek oluyor! 🎉" ],
+        90: [ "Çok az kaldı! Son virajdasın 🏁", "Neredeyse orada! Pes etme! 💥", "Bitirmek için doğdu bu hedef! 🚀" ],
+        100:[ "Hedefe ulaştın! Hayaller gerçek olur 🏆", "Başardın! Kendine güvendiğin için teşekkürler ✨", "Bu his her şeye değdi, değil mi? 🎊" ],
+    };
+
+    function getMotivation(percent) {
+        const keys  = [100, 90, 75, 50, 25, 10, 0];
+        const bucket = keys.find(k => percent >= k);
+        const msgs   = MOTIVATIONS[bucket];
+        return msgs[Math.floor(Math.random() * msgs.length)];
+    }
+
+    let lastMotivBucket = -1;
+
+    function updateMotivation(percent) {
+        const keys   = [100, 90, 75, 50, 25, 10, 0];
+        const bucket = keys.find(k => percent >= k);
+        const box    = document.getElementById('motivationBox');
+        box.style.display = 'block';
+        if (bucket !== lastMotivBucket) {
+            lastMotivBucket = bucket;
+            box.style.opacity = '0';
+            setTimeout(() => {
+                box.innerText  = getMotivation(percent);
+                box.style.opacity = '1';
+            }, 300);
+        }
+    }
+
     let goalCompleted = false;
 
     function calculate() {
@@ -623,6 +712,7 @@
         bar.innerText   = percent > 10 ? '%' + percent.toFixed(1) : '';
 
         updateBadges(percent);
+        updateMotivation(percent);
 
         const remaining = target - current;
 
@@ -631,6 +721,7 @@
             if (!goalCompleted) {
                 goalCompleted = true;
                 fireConfetti();
+                playGoalSound();
             }
             return;
         }
