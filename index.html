@@ -19,10 +19,7 @@
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 70%, #533483 100%);
             background-attachment: fixed;
         }
-
-        body.light-mode {
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 40%, #d299c2 70%, #fef9d7 100%);
-        }
+        body.light-mode { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 40%, #d299c2 70%, #fef9d7 100%); }
 
         .blob { position: fixed; border-radius: 50%; filter: blur(80px); opacity: 0.25; pointer-events: none; z-index: 0; }
         .blob-1 { width: 400px; height: 400px; background: #7c3aed; top: -100px; left: -100px; animation: blobFloat 8s ease-in-out infinite; }
@@ -46,45 +43,20 @@
             color: #fff;
             box-shadow: 0 20px 50px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.2);
         }
+        body.light-mode .glass { background: rgba(255,255,255,0.45); border-color: rgba(255,255,255,0.6); color: #1e1b4b; box-shadow: 0 20px 50px rgba(100,80,200,0.12), inset 0 1px 0 rgba(255,255,255,0.8); }
 
-        body.light-mode .glass {
-            background: rgba(255,255,255,0.45);
-            border-color: rgba(255,255,255,0.6);
-            color: #1e1b4b;
-            box-shadow: 0 20px 50px rgba(100,80,200,0.12), inset 0 1px 0 rgba(255,255,255,0.8);
-        }
-
+        /* ── Hedef Listesi ── */
         .goals-panel { padding: 1.2rem 1.4rem; }
         .goals-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
         .goals-title { font-size: 0.78rem; letter-spacing: 0.08em; opacity: 0.6; text-transform: uppercase; }
 
-        .btn-add {
-            background: rgba(167,139,250,0.25);
-            border: 1px solid rgba(167,139,250,0.4);
-            color: #fff;
-            border-radius: 50px;
-            padding: 5px 14px;
-            font-family: inherit;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: background 0.2s, transform 0.15s;
-        }
+        .btn-add { background: rgba(167,139,250,0.25); border: 1px solid rgba(167,139,250,0.4); color: #fff; border-radius: 50px; padding: 5px 14px; font-family: inherit; font-size: 0.8rem; cursor: pointer; transition: background 0.2s, transform 0.15s; }
         body.light-mode .btn-add { background: rgba(124,58,237,0.12); border-color: rgba(124,58,237,0.3); color: #3b1f8c; }
         .btn-add:hover { background: rgba(167,139,250,0.4); transform: scale(1.04); }
 
         .goals-list { display: flex; flex-direction: column; gap: 8px; }
 
-        .goal-chip {
-            display: flex;
-            align-items: center;
-            padding: 10px 14px;
-            border-radius: 50px;
-            background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.1);
-            cursor: pointer;
-            transition: background 0.2s, border-color 0.2s, transform 0.15s;
-            gap: 10px;
-        }
+        .goal-chip { display: flex; align-items: center; padding: 10px 14px; border-radius: 50px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); cursor: pointer; transition: background 0.2s, border-color 0.2s, transform 0.15s; gap: 10px; }
         body.light-mode .goal-chip { background: rgba(255,255,255,0.35); border-color: rgba(100,80,200,0.15); }
         .goal-chip:hover { background: rgba(255,255,255,0.12); transform: translateX(3px); }
         .goal-chip.active { background: rgba(167,139,250,0.2); border-color: rgba(167,139,250,0.45); }
@@ -95,44 +67,27 @@
         .chip-name { font-size: 0.86rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .chip-sub  { font-size: 0.7rem; opacity: 0.5; }
         .chip-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-
-        .chip-percent {
-            font-size: 0.76rem; font-weight: 700;
-            border-radius: 20px; padding: 2px 9px;
-        }
-
+        .chip-percent { font-size: 0.76rem; font-weight: 700; border-radius: 20px; padding: 2px 9px; }
         .btn-delete { background: none; border: none; color: rgba(255,255,255,0.3); cursor: pointer; font-size: 1rem; line-height: 1; padding: 2px 4px; border-radius: 6px; transition: color 0.2s; }
         body.light-mode .btn-delete { color: rgba(30,27,75,0.25); }
         .btn-delete:hover { color: #f87171; }
-
         .empty-state { font-size: 0.82rem; opacity: 0.45; text-align: center; padding: 8px 0; }
 
+        /* ── Ana Panel ── */
         .main-panel { padding: 2rem 2rem 1.8rem; text-align: center; }
-
         .panel-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 1.6rem; letter-spacing: 0.02em; transition: color 0.3s; }
 
         .input-group { margin-bottom: 1rem; text-align: left; }
-
         label { display: block; margin-left: 14px; margin-bottom: 6px; font-size: 0.78rem; color: rgba(255,255,255,0.6); letter-spacing: 0.03em; }
         body.light-mode label { color: rgba(30,27,75,0.55); }
 
-        input[type="text"],
-        input[type="number"],
-        input[type="date"] {
-            width: 100%;
-            padding: 13px 20px;
-            border-radius: 50px;
-            border: 1px solid rgba(255,255,255,0.15);
-            background: rgba(255,255,255,0.1);
-            color: #fff;
-            font-family: inherit;
-            font-size: 0.95rem;
-            outline: none;
+        input[type="text"], input[type="number"], input[type="date"] {
+            width: 100%; padding: 13px 20px; border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.1);
+            color: #fff; font-family: inherit; font-size: 0.95rem; outline: none;
             transition: background 0.3s, border-color 0.3s, transform 0.2s, box-shadow 0.3s;
         }
-        body.light-mode input[type="text"],
-        body.light-mode input[type="number"],
-        body.light-mode input[type="date"] { background: rgba(255,255,255,0.55); border-color: rgba(100,80,200,0.2); color: #1e1b4b; }
+        body.light-mode input[type="text"], body.light-mode input[type="number"], body.light-mode input[type="date"] { background: rgba(255,255,255,0.55); border-color: rgba(100,80,200,0.2); color: #1e1b4b; }
         input::placeholder { color: rgba(255,255,255,0.3); }
         body.light-mode input::placeholder { color: rgba(30,27,75,0.3); }
         input:focus { background: rgba(255,255,255,0.18); border-color: rgba(167,139,250,0.7); box-shadow: 0 0 0 3px rgba(167,139,250,0.2); transform: scale(1.02); }
@@ -140,53 +95,21 @@
         input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); opacity: 0.5; cursor: pointer; }
         body.light-mode input[type="date"]::-webkit-calendar-picker-indicator { filter: none; opacity: 0.45; }
 
-        /* ── Renk + Para Birimi Satırı ── */
-        .meta-row { display: flex; gap: 10px; align-items: stretch; }
+        .meta-row { display: flex; gap: 10px; align-items: stretch; margin-bottom: 1rem; }
         .meta-row .input-group { flex: 1; margin-bottom: 0; }
 
-        .color-picker-wrap {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 50px;
-            padding: 10px 16px;
-            transition: border-color 0.3s;
-        }
+        .color-picker-wrap { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); border-radius: 50px; padding: 10px 16px; }
         body.light-mode .color-picker-wrap { background: rgba(255,255,255,0.55); border-color: rgba(100,80,200,0.2); }
-
-        .color-preview { width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0; border: 2px solid rgba(255,255,255,0.3); cursor: pointer; transition: transform 0.2s; }
-        .color-preview:hover { transform: scale(1.15); }
-
         .color-swatches { display: flex; gap: 6px; flex-wrap: wrap; }
-        .swatch {
-            width: 20px; height: 20px; border-radius: 50%;
-            cursor: pointer; border: 2px solid transparent;
-            transition: transform 0.15s, border-color 0.15s;
-        }
+        .swatch { width: 20px; height: 20px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: transform 0.15s, border-color 0.15s; }
         .swatch:hover { transform: scale(1.2); }
         .swatch.selected { border-color: #fff; transform: scale(1.15); }
         body.light-mode .swatch.selected { border-color: #1e1b4b; }
 
-        select {
-            width: 100%;
-            padding: 13px 20px;
-            border-radius: 50px;
-            border: 1px solid rgba(255,255,255,0.15);
-            background: rgba(255,255,255,0.1);
-            color: #fff;
-            font-family: inherit;
-            font-size: 0.95rem;
-            outline: none;
-            cursor: pointer;
-            appearance: none;
-            transition: background 0.3s, border-color 0.3s;
-        }
+        select { width: 100%; padding: 13px 20px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.1); color: #fff; font-family: inherit; font-size: 0.95rem; outline: none; cursor: pointer; appearance: none; transition: background 0.3s, border-color 0.3s; }
         body.light-mode select { background: rgba(255,255,255,0.55); border-color: rgba(100,80,200,0.2); color: #1e1b4b; }
         select:focus { border-color: rgba(167,139,250,0.7); box-shadow: 0 0 0 3px rgba(167,139,250,0.2); }
         select option { background: #1e1b4b; color: #fff; }
-        body.light-mode select option { background: #fff; color: #1e1b4b; }
 
         .mode-toggle { display: flex; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); border-radius: 50px; padding: 4px; gap: 4px; }
         body.light-mode .mode-toggle { background: rgba(255,255,255,0.4); border-color: rgba(100,80,200,0.15); }
@@ -207,22 +130,91 @@
         .switch input:checked + .slider-knob { background: var(--accent, #a78bfa); }
         .switch input:checked + .slider-knob::before { transform: translateX(20px); }
 
+        /* ── Birikim Ekleme Kutusu ── */
+        .deposit-box {
+            margin-bottom: 1rem;
+            padding: 16px 18px;
+            border-radius: 20px;
+            background: rgba(167,139,250,0.1);
+            border: 1px solid rgba(167,139,250,0.2);
+        }
+        body.light-mode .deposit-box { background: rgba(124,58,237,0.06); border-color: rgba(124,58,237,0.18); }
+
+        .deposit-label { font-size: 0.78rem; color: rgba(255,255,255,0.6); margin-bottom: 10px; text-align: left; letter-spacing: 0.03em; }
+        body.light-mode .deposit-label { color: rgba(30,27,75,0.55); }
+
+        .deposit-row { display: flex; gap: 8px; align-items: center; }
+
+        .deposit-input {
+            flex: 1;
+            padding: 11px 18px;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            font-family: inherit;
+            font-size: 0.95rem;
+            outline: none;
+            transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+            transform: none !important;
+        }
+        body.light-mode .deposit-input { background: rgba(255,255,255,0.6); border-color: rgba(100,80,200,0.2); color: #1e1b4b; }
+        .deposit-input:focus { background: rgba(255,255,255,0.18); border-color: rgba(167,139,250,0.7); box-shadow: 0 0 0 3px rgba(167,139,250,0.2); }
+        body.light-mode .deposit-input:focus { background: rgba(255,255,255,0.85); }
+        .deposit-input::placeholder { color: rgba(255,255,255,0.3); }
+        body.light-mode .deposit-input::placeholder { color: rgba(30,27,75,0.3); }
+
+        .btn-deposit {
+            padding: 11px 20px;
+            border-radius: 50px;
+            border: none;
+            background: var(--accent, #a78bfa);
+            color: #fff;
+            font-family: inherit;
+            font-size: 0.88rem;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: transform 0.15s, box-shadow 0.2s, opacity 0.2s;
+            box-shadow: 0 3px 12px rgba(167,139,250,0.35);
+        }
+        .btn-deposit:hover { transform: translateY(-1px); opacity: 0.9; }
+        .btn-deposit:active { transform: scale(0.97); }
+
+        /* ── Geçmiş Listesi ── */
+        .history-list { margin-top: 12px; display: flex; flex-direction: column; gap: 6px; max-height: 160px; overflow-y: auto; }
+        .history-list::-webkit-scrollbar { width: 4px; }
+        .history-list::-webkit-scrollbar-track { background: transparent; }
+        .history-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+
+        .history-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 7px 14px;
+            border-radius: 50px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.08);
+            font-size: 0.8rem;
+            gap: 8px;
+            animation: slideIn 0.3s ease;
+        }
+        body.light-mode .history-item { background: rgba(255,255,255,0.4); border-color: rgba(100,80,200,0.12); }
+
+        @keyframes slideIn { from { opacity:0; transform: translateY(-6px); } to { opacity:1; transform: translateY(0); } }
+
+        .history-date { opacity: 0.5; font-size: 0.72rem; flex-shrink: 0; }
+        .history-amount { font-weight: 700; }
+        .history-total { opacity: 0.5; font-size: 0.72rem; }
+        .btn-del-entry { background: none; border: none; color: rgba(255,255,255,0.2); cursor: pointer; font-size: 0.85rem; padding: 0 2px; transition: color 0.2s; flex-shrink: 0; }
+        body.light-mode .btn-del-entry { color: rgba(30,27,75,0.2); }
+        .btn-del-entry:hover { color: #f87171; }
+
+        /* ── Progress ── */
         .progress-container { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1); border-radius: 50px; height: 34px; margin: 18px 0; overflow: hidden; }
         body.light-mode .progress-container { background: rgba(255,255,255,0.4); border-color: rgba(100,80,200,0.15); }
-
         @keyframes rainbow { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
-
-        .progress-bar {
-            height: 100%; width: 0%;
-            background: linear-gradient(90deg, #ff6b6b,#ffd93d,#6bcb77,#4d96ff,#c77dff,#ff6b6b);
-            background-size: 300% 300%;
-            animation: rainbow 3s ease infinite;
-            transition: width 0.8s cubic-bezier(0.175,0.885,0.32,1.275), background 0.6s ease;
-            border-radius: 50px;
-            display: flex; align-items: center; justify-content: center;
-            color: white; font-size: 0.78rem; font-weight: bold;
-            text-shadow: 0 1px 4px rgba(0,0,0,0.3);
-        }
+        .progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg,#ff6b6b,#ffd93d,#6bcb77,#4d96ff,#c77dff,#ff6b6b); background-size: 300% 300%; animation: rainbow 3s ease infinite; transition: width 0.8s cubic-bezier(0.175,0.885,0.32,1.275), background 0.6s ease; border-radius: 50px; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.78rem; font-weight: bold; text-shadow: 0 1px 4px rgba(0,0,0,0.3); }
 
         .milestones { display: flex; justify-content: space-between; margin: 0 4px 14px; }
         .badge-item { display: flex; flex-direction: column; align-items: center; gap: 4px; opacity: 0.2; filter: grayscale(1); transition: opacity 0.5s, filter 0.5s, transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275); }
@@ -238,7 +230,7 @@
         .result { padding: 13px 16px; border-radius: 18px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); font-size: 0.88rem; line-height: 1.65; color: rgba(255,255,255,0.88); text-align: left; }
         body.light-mode .result { background: rgba(255,255,255,0.4); border-color: rgba(100,80,200,0.15); color: #1e1b4b; }
 
-        .btn-save { margin-top: 14px; width: 100%; padding: 13px; border-radius: 50px; border: none; background: linear-gradient(135deg, #7c3aed, #a78bfa); color: white; font-family: inherit; font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: transform 0.15s, box-shadow 0.2s; box-shadow: 0 4px 20px rgba(124,58,237,0.4); letter-spacing: 0.02em; }
+        .btn-save { margin-top: 14px; width: 100%; padding: 13px; border-radius: 50px; border: none; background: linear-gradient(135deg,#7c3aed,#a78bfa); color: white; font-family: inherit; font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: transform 0.15s, box-shadow 0.2s; box-shadow: 0 4px 20px rgba(124,58,237,0.4); letter-spacing: 0.02em; }
         .btn-save:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(124,58,237,0.5); }
         .btn-save:active { transform: scale(0.98); }
 
@@ -248,7 +240,6 @@
 
         .toast { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(16px); background: rgba(255,255,255,0.12); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 10px 22px; border-radius: 50px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); font-size: 0.86rem; font-family: 'Comfortaa', sans-serif; opacity: 0; transition: opacity 0.3s, transform 0.3s; pointer-events: none; white-space: nowrap; z-index: 9998; }
         .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
         #confetti-canvas { position: fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9999; }
     </style>
 </head>
@@ -274,14 +265,14 @@
     </div>
 
     <div class="glass main-panel">
-        <div class="panel-title" id="panelTitle">HedefCounter</div>
+        <div class="panel-title" id="panelTitle">#HedefCounter</div>
 
         <div class="input-group">
             <label>🏷️ Hedef Adı</label>
             <input type="text" id="goalName" placeholder="Örn: Araba, Tatil, Laptop..." oninput="autoSave(); syncTitle()">
         </div>
 
-        <div class="meta-row" style="margin-bottom:1rem;">
+        <div class="meta-row">
             <div class="input-group">
                 <label>🎨 Renk</label>
                 <div class="color-picker-wrap">
@@ -310,6 +301,16 @@
             <input type="number" id="current" placeholder="5750" oninput="autoSave(); calculate()">
         </div>
 
+        <!-- Bugün Birikim Ekle -->
+        <div class="deposit-box">
+            <div class="deposit-label">➕ Bugün ne kadar ekledin?</div>
+            <div class="deposit-row">
+                <input class="deposit-input" type="number" id="depositAmount" placeholder="200" min="0">
+                <button class="btn-deposit" onclick="addDeposit()">Ekle</button>
+            </div>
+            <div class="history-list" id="historyList"></div>
+        </div>
+
         <div class="input-group">
             <label>🗓️ Mod</label>
             <div class="mode-toggle">
@@ -318,7 +319,7 @@
             </div>
         </div>
 
-        <div class="input-group" id="weekendGroup">
+        <div class="input-group">
             <div class="weekend-row">
                 <span class="weekend-label">📅 Hafta sonları dahil</span>
                 <label class="switch">
@@ -358,126 +359,85 @@
 </div>
 
 <script>
-    const PALETTE = ['#f87171','#fb923c','#fbbf24','#a3e635','#34d399','#22d3ee','#60a5fa','#a78bfa','#f472b6','#e2e8f0'];
+    const PALETTE=['#f87171','#fb923c','#fbbf24','#a3e635','#34d399','#22d3ee','#60a5fa','#a78bfa','#f472b6','#e2e8f0'];
+    const SYMBOLS={TL:'₺',USD:'$',EUR:'€',GBP:'£',JPY:'¥'};
+    const MILESTONES=[{id:'badge-25',threshold:25,msg:'🥉 İlk çeyrek tamam!'},{id:'badge-50',threshold:50,msg:'🥈 Yarı yola geldin!'},{id:'badge-75',threshold:75,msg:'🥇 Neredeyse bitti!'},{id:'badge-100',threshold:100,msg:'🏆 Hedef tamamlandı!'}];
+    const MOTIVATIONS={0:['Henüz başlamadın, ilk adım en zor olanı! 💪','Büyük hedefler küçük adımlarla başlar. 🚀','Bugün biriktirdiğin, yarının özgürlüğü. ✨'],10:['Başladın, bu bile çoğundan iyi! 🔥','İlk %10 tamam, motor ısındı! 🏎️','Küçük ama emin adımlar... devam et! 👣'],25:['Çeyrek yolda! Ritmi yakaladın mı? 🎯','Her gün biraz daha yakınsın. 📈','Bu tempoda harika gidiyorsun! 💫'],50:['Tam ortasındasın! Artık geri dönüş yok 😄','Yarı yol tamam, ivme sende! ⚡','50% — bugüne kadar harika iş çıkardın! 🌟'],75:['Son çeyrek! Neredeyse bitirdin 🥇','Bu noktaya gelmek çok şey gerektirir! 🎖️','%75 — artık hayal değil, gerçek oluyor! 🎉'],90:['Çok az kaldı! Son virajdasın 🏁','Neredeyse orada! Pes etme! 💥','Bitirmek için doğdu bu hedef! 🚀'],100:['Hedefe ulaştın! Hayaller gerçek olur 🏆','Başardın! Kendine güvendiğin için teşekkürler ✨','Bu his her şeye değdi, değil mi? 🎊']};
 
-    let selectedColor = PALETTE[7];
+    let selectedColor=PALETTE[7], currentMode='daily', activeGoalId=null;
+    let unlockedBadges=new Set(), toastTimer=null, lastMotivBucket=-1, goalCompleted=false;
 
-    function buildSwatches() {
-        const wrap = document.getElementById('swatches');
-        wrap.innerHTML = PALETTE.map(c =>
+    function fmt(n){ return parseFloat(n).toLocaleString('tr-TR'); }
+    function getCurrency(){ return document.getElementById('currency').value||'TL'; }
+    function getSymbol(){ return SYMBOLS[getCurrency()]||getCurrency(); }
+    function loadGoals(){ try{ return JSON.parse(localStorage.getItem('hc_goals')||'[]'); }catch{ return []; } }
+    function saveGoals(g){ localStorage.setItem('hc_goals',JSON.stringify(g)); }
+
+    function buildSwatches(){
+        document.getElementById('swatches').innerHTML=PALETTE.map(c=>
             `<div class="swatch ${c===selectedColor?'selected':''}" style="background:${c}" onclick="pickColor('${c}')"></div>`
         ).join('');
     }
 
-    function pickColor(c) {
-        selectedColor = c;
-        buildSwatches();
-        applyAccent(c);
-        autoSave();
+    function pickColor(c){ selectedColor=c; buildSwatches(); applyAccent(c); autoSave(); }
+
+    function applyAccent(c){
+        document.documentElement.style.setProperty('--accent',c);
+        const bar=document.getElementById('bar');
+        if(parseFloat(bar.style.width)>0){ bar.style.background=c; bar.style.backgroundSize=''; bar.style.animation='none'; }
+        document.getElementById('panelTitle').style.color = document.getElementById('goalName').value.trim() ? c : '';
     }
 
-    function applyAccent(c) {
-        document.documentElement.style.setProperty('--accent', c);
-        const bar = document.getElementById('bar');
-        if (bar.style.width && bar.style.width !== '0%') {
-            bar.style.background = c;
-            bar.style.backgroundSize = '';
-            bar.style.animation = 'none';
-        }
-        const title = document.getElementById('panelTitle');
-        title.style.color = c;
-    }
-
-    function resetBarStyle() {
-        const bar = document.getElementById('bar');
-        bar.style.background = '';
-        bar.style.backgroundSize = '300% 300%';
-        bar.style.animation = 'rainbow 3s ease infinite';
-    }
+    function resetBarStyle(){ const bar=document.getElementById('bar'); bar.style.background=''; bar.style.backgroundSize='300% 300%'; bar.style.animation='rainbow 3s ease infinite'; }
 
     buildSwatches();
 
-    const currentTheme = localStorage.getItem('theme') || 'dark';
-    if (currentTheme === 'light') { document.body.classList.add('light-mode'); document.getElementById('themeBtn').innerText = '☀️'; }
+    const currentTheme=localStorage.getItem('theme')||'dark';
+    if(currentTheme==='light'){ document.body.classList.add('light-mode'); document.getElementById('themeBtn').innerText='☀️'; }
 
-    function toggleTheme() {
-        const body = document.body, btn = document.getElementById('themeBtn');
-        if (body.classList.contains('light-mode')) { body.classList.remove('light-mode'); btn.innerText='🌙'; localStorage.setItem('theme','dark'); }
-        else { body.classList.add('light-mode'); btn.innerText='☀️'; localStorage.setItem('theme','light'); }
+    function toggleTheme(){
+        const body=document.body,btn=document.getElementById('themeBtn');
+        if(body.classList.contains('light-mode')){ body.classList.remove('light-mode'); btn.innerText='🌙'; localStorage.setItem('theme','dark'); }
+        else{ body.classList.add('light-mode'); btn.innerText='☀️'; localStorage.setItem('theme','light'); }
     }
 
-    const canvas = document.getElementById('confetti-canvas');
-    const ctx    = canvas.getContext('2d');
-    let particles=[], animationId=null;
+    const canvas=document.getElementById('confetti-canvas'),ctx=canvas.getContext('2d');
+    let particles=[],animationId=null;
     const COLORS=['#00b894','#55efc4','#fdcb6e','#e17055','#6c5ce7','#fd79a8','#0984e3'];
-
-    function resizeCanvas() { canvas.width=window.innerWidth; canvas.height=window.innerHeight; }
-    resizeCanvas(); window.addEventListener('resize', resizeCanvas);
-
-    function createParticle(x,y) {
-        const angle=Math.random()*Math.PI*2, speed=Math.random()*8+3;
-        return {x,y,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed-6,color:COLORS[Math.floor(Math.random()*COLORS.length)],width:Math.random()*10+6,height:Math.random()*6+4,rotation:Math.random()*360,rotSpeed:(Math.random()-0.5)*8,alpha:1,gravity:0.25};
-    }
-
-    function spawnBurst(count) {
-        const cx=canvas.width/2,cy=canvas.height/2;
-        for(let i=0;i<count;i++) particles.push(createParticle(cx+(Math.random()-0.5)*100,cy+(Math.random()-0.5)*100));
-        for(let i=0;i<count/3;i++){particles.push(createParticle(0,canvas.height*0.7));particles.push(createParticle(canvas.width,canvas.height*0.7));}
-    }
-
-    function animateConfetti() {
-        ctx.clearRect(0,0,canvas.width,canvas.height);
-        particles=particles.filter(p=>p.alpha>0.05);
-        for(const p of particles){p.x+=p.vx;p.y+=p.vy;p.vy+=p.gravity;p.vx*=0.99;p.rotation+=p.rotSpeed;if(p.y>canvas.height*0.6)p.alpha-=0.02;ctx.save();ctx.globalAlpha=p.alpha;ctx.translate(p.x,p.y);ctx.rotate(p.rotation*Math.PI/180);ctx.fillStyle=p.color;ctx.fillRect(-p.width/2,-p.height/2,p.width,p.height);ctx.restore();}
-        if(particles.length>0) animationId=requestAnimationFrame(animateConfetti);
-        else ctx.clearRect(0,0,canvas.width,canvas.height);
-    }
-
-    function fireConfetti(){if(animationId)cancelAnimationFrame(animationId);particles=[];spawnBurst(180);animateConfetti();}
+    function resizeCanvas(){ canvas.width=window.innerWidth; canvas.height=window.innerHeight; }
+    resizeCanvas(); window.addEventListener('resize',resizeCanvas);
+    function createParticle(x,y){ const a=Math.random()*Math.PI*2,s=Math.random()*8+3; return{x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-6,color:COLORS[Math.floor(Math.random()*COLORS.length)],width:Math.random()*10+6,height:Math.random()*6+4,rotation:Math.random()*360,rotSpeed:(Math.random()-0.5)*8,alpha:1,gravity:0.25}; }
+    function spawnBurst(n){ const cx=canvas.width/2,cy=canvas.height/2; for(let i=0;i<n;i++) particles.push(createParticle(cx+(Math.random()-0.5)*100,cy+(Math.random()-0.5)*100)); for(let i=0;i<n/3;i++){particles.push(createParticle(0,canvas.height*0.7));particles.push(createParticle(canvas.width,canvas.height*0.7));} }
+    function animateConfetti(){ ctx.clearRect(0,0,canvas.width,canvas.height); particles=particles.filter(p=>p.alpha>0.05); for(const p of particles){p.x+=p.vx;p.y+=p.vy;p.vy+=p.gravity;p.vx*=0.99;p.rotation+=p.rotSpeed;if(p.y>canvas.height*0.6)p.alpha-=0.02;ctx.save();ctx.globalAlpha=p.alpha;ctx.translate(p.x,p.y);ctx.rotate(p.rotation*Math.PI/180);ctx.fillStyle=p.color;ctx.fillRect(-p.width/2,-p.height/2,p.width,p.height);ctx.restore();} if(particles.length>0)animationId=requestAnimationFrame(animateConfetti);else ctx.clearRect(0,0,canvas.width,canvas.height); }
+    function fireConfetti(){ if(animationId)cancelAnimationFrame(animationId); particles=[]; spawnBurst(180); animateConfetti(); }
 
     const audioCtx=new(window.AudioContext||window.webkitAudioContext)();
-    function playTone(freq,type,duration,vol=0.18){const osc=audioCtx.createOscillator(),gain=audioCtx.createGain();osc.connect(gain);gain.connect(audioCtx.destination);osc.type=type;osc.frequency.setValueAtTime(freq,audioCtx.currentTime);gain.gain.setValueAtTime(vol,audioCtx.currentTime);gain.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+duration);osc.start();osc.stop(audioCtx.currentTime+duration);}
-    function playBadgeSound(){playTone(520,'sine',0.12);setTimeout(()=>playTone(660,'sine',0.15),100);setTimeout(()=>playTone(800,'sine',0.2),200);}
-    function playGoalSound(){[523,659,784,1047].forEach((f,i)=>setTimeout(()=>playTone(f,'sine',0.3,0.2),i*100));}
-    function playSaveSound(){playTone(440,'sine',0.08);setTimeout(()=>playTone(550,'sine',0.12),80);}
-    function resumeAudio(){if(audioCtx.state==='suspended')audioCtx.resume();}
+    function playTone(f,t,d,v=0.18){ const o=audioCtx.createOscillator(),g=audioCtx.createGain(); o.connect(g);g.connect(audioCtx.destination);o.type=t;o.frequency.setValueAtTime(f,audioCtx.currentTime);g.gain.setValueAtTime(v,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+d);o.start();o.stop(audioCtx.currentTime+d); }
+    function playBadgeSound(){ playTone(520,'sine',0.12);setTimeout(()=>playTone(660,'sine',0.15),100);setTimeout(()=>playTone(800,'sine',0.2),200); }
+    function playGoalSound(){ [523,659,784,1047].forEach((f,i)=>setTimeout(()=>playTone(f,'sine',0.3,0.2),i*100)); }
+    function playSaveSound(){ playTone(440,'sine',0.08);setTimeout(()=>playTone(550,'sine',0.12),80); }
+    function playDepositSound(){ playTone(600,'sine',0.1);setTimeout(()=>playTone(750,'sine',0.14),90); }
+    function resumeAudio(){ if(audioCtx.state==='suspended')audioCtx.resume(); }
     document.addEventListener('click',resumeAudio,{once:true});
     document.addEventListener('input',resumeAudio,{once:true});
 
-    const MILESTONES=[{id:'badge-25',threshold:25,msg:'🥉 İlk çeyrek tamam!'},{id:'badge-50',threshold:50,msg:'🥈 Yarı yola geldin!'},{id:'badge-75',threshold:75,msg:'🥇 Neredeyse bitti!'},{id:'badge-100',threshold:100,msg:'🏆 Hedef tamamlandı!'}];
-    const MOTIVATIONS={0:['Henüz başlamadın, ilk adım en zor olanı! 💪','Büyük hedefler küçük adımlarla başlar. 🚀','Bugün biriktirdiğin, yarının özgürlüğü. ✨'],10:['Başladın, bu bile çoğundan iyi! 🔥','İlk %10 tamam, motor ısındı! 🏎️','Küçük ama emin adımlar... devam et! 👣'],25:['Çeyrek yolda! Ritmi yakaladın mı? 🎯','Her gün biraz daha yakınsın. 📈','Bu tempoda harika gidiyorsun! 💫'],50:['Tam ortasındasın! Artık geri dönüş yok 😄','Yarı yol tamam, ivme sende! ⚡','50% — bugüne kadar harika iş çıkardın! 🌟'],75:['Son çeyrek! Neredeyse bitirdin 🥇','Bu noktaya gelmek çok şey gerektirir! 🎖️','%75 — artık hayal değil, gerçek oluyor! 🎉'],90:['Çok az kaldı! Son virajdasın 🏁','Neredeyse orada! Pes etme! 💥','Bitirmek için doğdu bu hedef! 🚀'],100:['Hedefe ulaştın! Hayaller gerçek olur 🏆','Başardın! Kendine güvendiğin için teşekkürler ✨','Bu his her şeye değdi, değil mi? 🎊']};
-    const SYMBOLS={TL:'₺',USD:'$',EUR:'€',GBP:'£',JPY:'¥'};
-
-    const unlockedBadges=new Set();
-    let toastTimer=null, lastMotivBucket=-1, goalCompleted=false, currentMode='daily', activeGoalId=null;
-
-    function getCurrency(){ return document.getElementById('currency').value || 'TL'; }
-    function getSymbol(){ return SYMBOLS[getCurrency()] || getCurrency(); }
-
-    function loadGoals(){try{return JSON.parse(localStorage.getItem('hc_goals')||'[]');}catch{return [];}}
-    function saveGoals(goals){localStorage.setItem('hc_goals',JSON.stringify(goals));}
-
-    function showToast(msg){const t=document.getElementById('toast');t.innerText=msg;t.classList.add('show');if(toastTimer)clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2800);}
+    function showToast(msg){ const t=document.getElementById('toast'); t.innerText=msg; t.classList.add('show'); if(toastTimer)clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),2800); }
 
     function updateBadges(percent){
         MILESTONES.forEach(m=>{
             const el=document.getElementById(m.id);
-            if(percent>=m.threshold){el.classList.add('unlocked');if(!unlockedBadges.has(m.id)){unlockedBadges.add(m.id);el.classList.add('pop');showToast(m.msg);playBadgeSound();setTimeout(()=>el.classList.remove('pop'),400);}}
-            else{el.classList.remove('unlocked');unlockedBadges.delete(m.id);}
+            if(percent>=m.threshold){ el.classList.add('unlocked'); if(!unlockedBadges.has(m.id)){ unlockedBadges.add(m.id); el.classList.add('pop'); showToast(m.msg); playBadgeSound(); setTimeout(()=>el.classList.remove('pop'),400); } }
+            else{ el.classList.remove('unlocked'); unlockedBadges.delete(m.id); }
         });
     }
 
     function updateMotivation(percent){
-        const keys=[100,90,75,50,25,10,0], bucket=keys.find(k=>percent>=k), box=document.getElementById('motivationBox');
+        const keys=[100,90,75,50,25,10,0],bucket=keys.find(k=>percent>=k),box=document.getElementById('motivationBox');
         box.style.display='block';
-        if(bucket!==lastMotivBucket){lastMotivBucket=bucket;box.style.opacity='0';setTimeout(()=>{const msgs=MOTIVATIONS[bucket];box.innerText=msgs[Math.floor(Math.random()*msgs.length)];box.style.opacity='1';},300);}
+        if(bucket!==lastMotivBucket){ lastMotivBucket=bucket; box.style.opacity='0'; setTimeout(()=>{ const msgs=MOTIVATIONS[bucket]; box.innerText=msgs[Math.floor(Math.random()*msgs.length)]; box.style.opacity='1'; },300); }
     }
 
-    function syncTitle(){
-        const name=document.getElementById('goalName').value.trim();
-        document.getElementById('panelTitle').innerText = name || 'HedefCounter';
-        document.getElementById('panelTitle').style.color = name ? selectedColor : '';
-    }
+    function syncTitle(){ const n=document.getElementById('goalName').value.trim(); document.getElementById('panelTitle').innerText=n||'#HedefCounter'; document.getElementById('panelTitle').style.color=n?selectedColor:''; }
 
     function setMode(mode){
         currentMode=mode;
@@ -488,84 +448,110 @@
         calculate();
     }
 
-    function countWeekdays(fromDate,days){let count=0,d=new Date(fromDate);while(count<days){d.setDate(d.getDate()+1);const day=d.getDay();if(day!==0&&day!==6)count++;}return d;}
-    function weekdaysUntil(fromDate,toDate){let count=0,d=new Date(fromDate);while(d<toDate){d.setDate(d.getDate()+1);const day=d.getDay();if(day!==0&&day!==6)count++;}return count;}
-
-    function fmt(n){ return parseFloat(n).toLocaleString('tr-TR'); }
+    function countWeekdays(from,days){ let c=0,d=new Date(from); while(c<days){d.setDate(d.getDate()+1);const x=d.getDay();if(x!==0&&x!==6)c++;} return d; }
+    function weekdaysUntil(from,to){ let c=0,d=new Date(from); while(d<to){d.setDate(d.getDate()+1);const x=d.getDay();if(x!==0&&x!==6)c++;} return c; }
 
     function calculate(){
         const target=parseFloat(document.getElementById('target').value);
         const current=parseFloat(document.getElementById('current').value);
         if(!(target>0&&current>=0)) return;
-
-        const sym = getSymbol();
+        const sym=getSymbol();
         let percent=Math.min((current/target)*100,100);
         const bar=document.getElementById('bar');
         bar.style.width=percent.toFixed(1)+'%';
         bar.innerText=percent>10?'%'+percent.toFixed(1):'';
-
-        if(selectedColor){
-            bar.style.background=selectedColor;
-            bar.style.backgroundSize='';
-            bar.style.animation='none';
-        }
-
-        updateBadges(percent);
-        updateMotivation(percent);
-
+        if(selectedColor){ bar.style.background=selectedColor; bar.style.backgroundSize=''; bar.style.animation='none'; }
+        updateBadges(percent); updateMotivation(percent);
         const remaining=target-current;
-
-        if(remaining<=0){
-            document.getElementById('resultBox').innerHTML='<b>Hedef Tamamlandı! 🎉</b>';
-            if(!goalCompleted){goalCompleted=true;fireConfetti();playGoalSound();}
-            renderGoalsList(); return;
-        }
-
+        if(remaining<=0){ document.getElementById('resultBox').innerHTML='<b>Hedef Tamamlandı! 🎉</b>'; if(!goalCompleted){goalCompleted=true;fireConfetti();playGoalSound();} renderGoalsList(); return; }
         goalCompleted=false;
-        const includeWeekends=document.getElementById('weekendToggle').checked;
-
+        const incW=document.getElementById('weekendToggle').checked;
         if(currentMode==='daily'){
             const daily=parseFloat(document.getElementById('daily').value);
             if(!(daily>0)) return;
             const totalDays=Math.ceil(remaining/daily);
-            let arrival,calendarDays;
-            if(includeWeekends){arrival=new Date();arrival.setDate(arrival.getDate()+totalDays);calendarDays=totalDays;}
-            else{const today=new Date();today.setHours(0,0,0,0);arrival=countWeekdays(today,totalDays);calendarDays=Math.round((arrival-today)/86400000);}
-            const months=(calendarDays/30).toFixed(1);
-            const arrivalStr=arrival.toLocaleDateString('tr-TR',{day:'numeric',month:'long',year:'numeric'});
-            const note=includeWeekends?'':' <span style="opacity:0.6;font-size:0.78rem;">(haftaiçi)</span>';
-            document.getElementById('resultBox').innerHTML=`Kalan: <b>${fmt(remaining)} ${sym}</b><br><b>${calendarDays} gün</b> (~${months} ay)${note} · ${arrivalStr}`;
+            let arrival,calDays;
+            if(incW){arrival=new Date();arrival.setDate(arrival.getDate()+totalDays);calDays=totalDays;}
+            else{const t=new Date();t.setHours(0,0,0,0);arrival=countWeekdays(t,totalDays);calDays=Math.round((arrival-t)/86400000);}
+            const months=(calDays/30).toFixed(1),arrStr=arrival.toLocaleDateString('tr-TR',{day:'numeric',month:'long',year:'numeric'}),note=incW?'':' <span style="opacity:0.6;font-size:0.78rem;">(haftaiçi)</span>';
+            document.getElementById('resultBox').innerHTML=`Kalan: <b>${fmt(remaining)} ${sym}</b><br><b>${calDays} gün</b> (~${months} ay)${note} · ${arrStr}`;
         } else {
-            const dateVal=document.getElementById('targetDate').value;
-            if(!dateVal) return;
+            const dv=document.getElementById('targetDate').value; if(!dv) return;
             const today=new Date();today.setHours(0,0,0,0);
-            const targetDate=new Date(dateVal);
-            if(targetDate<=today){document.getElementById('resultBox').innerHTML='<b>Tarih geçmiş! 📅</b>';return;}
-            const calendarDays=Math.round((targetDate-today)/86400000);
-            const activeDays=includeWeekends?calendarDays:weekdaysUntil(today,targetDate);
-            if(activeDays<=0){document.getElementById('resultBox').innerHTML='<b>Hafta içi gün kalmadı! 📅</b>';return;}
-            const dailyNeeded=(remaining/activeDays).toFixed(2);
-            const months=(calendarDays/30).toFixed(1);
-            const note=includeWeekends?'':' <span style="opacity:0.6;font-size:0.78rem;">(haftaiçi)</span>';
-            document.getElementById('resultBox').innerHTML=`Kalan: <b>${fmt(remaining)} ${sym}</b><br><b>${calendarDays} gün</b> (~${months} ay) · Günlük${note} <b>${fmt(dailyNeeded)} ${sym}</b> biriktirmen gerekiyor`;
+            const td=new Date(dv);
+            if(td<=today){document.getElementById('resultBox').innerHTML='<b>Tarih geçmiş! 📅</b>';return;}
+            const calDays=Math.round((td-today)/86400000),actDays=incW?calDays:weekdaysUntil(today,td);
+            if(actDays<=0){document.getElementById('resultBox').innerHTML='<b>Hafta içi gün kalmadı! 📅</b>';return;}
+            const dn=(remaining/actDays).toFixed(2),months=(calDays/30).toFixed(1),note=incW?'':' <span style="opacity:0.6;font-size:0.78rem;">(haftaiçi)</span>';
+            document.getElementById('resultBox').innerHTML=`Kalan: <b>${fmt(remaining)} ${sym}</b><br><b>${calDays} gün</b> (~${months} ay) · Günlük${note} <b>${fmt(dn)} ${sym}</b> biriktirmen gerekiyor`;
         }
-
         renderGoalsList();
     }
 
+    /* ── Birikim Ekleme ── */
+    function addDeposit(){
+        if(!activeGoalId){ showToast('⚠️ Önce bir hedef kaydet!'); return; }
+        const amount=parseFloat(document.getElementById('depositAmount').value);
+        if(!(amount>0)){ showToast('⚠️ Geçerli bir miktar gir!'); return; }
+
+        const goals=loadGoals();
+        const idx=goals.findIndex(g=>g.id===activeGoalId);
+        if(idx===-1) return;
+
+        const goal=goals[idx];
+        const newCurrent=parseFloat(goal.current||0)+amount;
+        goal.current=newCurrent.toString();
+
+        if(!goal.history) goal.history=[];
+        goal.history.unshift({ amount, total: newCurrent, date: new Date().toLocaleDateString('tr-TR',{day:'numeric',month:'short',year:'numeric'}) });
+
+        goals[idx]=goal;
+        saveGoals(goals);
+
+        document.getElementById('current').value=newCurrent;
+        document.getElementById('depositAmount').value='';
+
+        playDepositSound();
+        showToast(`+${fmt(amount)} ${getSymbol()} eklendi! 💰`);
+        renderHistory(goal.history, goal.currency||'TL');
+        calculate();
+    }
+
+    function deleteDeposit(entryIdx){
+        const goals=loadGoals();
+        const idx=goals.findIndex(g=>g.id===activeGoalId);
+        if(idx===-1) return;
+        const goal=goals[idx];
+        const removed=goal.history[entryIdx];
+        goal.history.splice(entryIdx,1);
+        const newCurrent=Math.max(0, parseFloat(goal.current||0)-removed.amount);
+        goal.current=newCurrent.toString();
+        goal.history.forEach((h,i)=>{ if(i>=entryIdx) h.total=Math.max(0,h.total-removed.amount); });
+        goals[idx]=goal;
+        saveGoals(goals);
+        document.getElementById('current').value=newCurrent;
+        renderHistory(goal.history, goal.currency||'TL');
+        calculate();
+        showToast('🗑️ Giriş silindi');
+    }
+
+    function renderHistory(history, currency){
+        const sym=SYMBOLS[currency]||currency;
+        const list=document.getElementById('historyList');
+        if(!history||history.length===0){ list.innerHTML=''; return; }
+        list.innerHTML=history.map((h,i)=>
+            `<div class="history-item">
+                <span class="history-date">${h.date}</span>
+                <span class="history-amount" style="color:${selectedColor}">+${fmt(h.amount)} ${sym}</span>
+                <span class="history-total">${fmt(h.total)} ${sym}</span>
+                <button class="btn-del-entry" onclick="deleteDeposit(${i})">✕</button>
+            </div>`
+        ).join('');
+    }
+
+    /* ── Form Yönetimi ── */
     function getFormData(){
-        return {
-            id:             activeGoalId||Date.now().toString(),
-            name:           document.getElementById('goalName').value.trim()||'İsimsiz Hedef',
-            color:          selectedColor,
-            currency:       getCurrency(),
-            target:         document.getElementById('target').value,
-            current:        document.getElementById('current').value,
-            mode:           currentMode,
-            daily:          document.getElementById('daily').value,
-            targetDate:     document.getElementById('targetDate').value,
-            includeWeekends:document.getElementById('weekendToggle').checked,
-        };
+        return { id:activeGoalId||Date.now().toString(), name:document.getElementById('goalName').value.trim()||'İsimsiz Hedef', color:selectedColor, currency:getCurrency(), target:document.getElementById('target').value, current:document.getElementById('current').value, mode:currentMode, daily:document.getElementById('daily').value, targetDate:document.getElementById('targetDate').value, includeWeekends:document.getElementById('weekendToggle').checked };
     }
 
     function loadFormData(goal){
@@ -578,24 +564,22 @@
         document.getElementById('weekendToggle').checked=goal.includeWeekends!==false;
         document.getElementById('currency').value=goal.currency||'TL';
         selectedColor=goal.color||PALETTE[7];
-        buildSwatches();
-        applyAccent(selectedColor);
-        unlockedBadges.clear();lastMotivBucket=-1;goalCompleted=false;
+        buildSwatches(); applyAccent(selectedColor);
+        unlockedBadges.clear(); lastMotivBucket=-1; goalCompleted=false;
         setMode(goal.mode||'daily');
         document.getElementById('panelTitle').innerText=goal.name;
         document.getElementById('panelTitle').style.color=selectedColor;
+        renderHistory(goal.history||[], goal.currency||'TL');
     }
 
     function saveGoal(){
         const data=getFormData();
         const goals=loadGoals();
         const idx=goals.findIndex(g=>g.id===data.id);
-        if(idx>-1) goals[idx]=data; else goals.push(data);
-        saveGoals(goals);
-        activeGoalId=data.id;
-        renderGoalsList();
-        playSaveSound();
-        showToast('✅ Kaydedildi!');
+        if(idx>-1){ data.history=goals[idx].history||[]; goals[idx]=data; }
+        else goals.push(data);
+        saveGoals(goals); activeGoalId=data.id;
+        renderGoalsList(); playSaveSound(); showToast('✅ Kaydedildi!');
     }
 
     function autoSave(){
@@ -603,16 +587,14 @@
         const data=getFormData();
         const goals=loadGoals();
         const idx=goals.findIndex(g=>g.id===activeGoalId);
-        if(idx>-1){goals[idx]=data;saveGoals(goals);renderGoalsList();}
+        if(idx>-1){ data.history=goals[idx].history||[]; goals[idx]=data; saveGoals(goals); renderGoalsList(); }
     }
 
     function deleteGoal(id,e){
         e.stopPropagation();
-        const goals=loadGoals().filter(g=>g.id!==id);
-        saveGoals(goals);
+        saveGoals(loadGoals().filter(g=>g.id!==id));
         if(activeGoalId===id){activeGoalId=null;clearForm();}
-        renderGoalsList();
-        showToast('🗑️ Hedef silindi');
+        renderGoalsList(); showToast('🗑️ Hedef silindi');
     }
 
     function clearForm(){
@@ -620,44 +602,33 @@
         document.getElementById('daily').value='125';
         document.getElementById('weekendToggle').checked=true;
         document.getElementById('currency').value='TL';
-        document.getElementById('bar').style.width='0%';
-        document.getElementById('bar').innerText='';
-        resetBarStyle();
+        document.getElementById('bar').style.width='0%'; document.getElementById('bar').innerText=''; resetBarStyle();
         document.getElementById('resultBox').innerText='Hesaplamak için değerleri giriniz...';
         document.getElementById('motivationBox').style.display='none';
-        document.getElementById('panelTitle').innerText='HedefCounter';
-        document.getElementById('panelTitle').style.color='';
-        selectedColor=PALETTE[7];
-        buildSwatches();
-        applyAccent(selectedColor);
-        unlockedBadges.clear();lastMotivBucket=-1;goalCompleted=false;
+        document.getElementById('panelTitle').innerText='#HedefCounter'; document.getElementById('panelTitle').style.color='';
+        document.getElementById('historyList').innerHTML='';
+        selectedColor=PALETTE[7]; buildSwatches(); applyAccent(selectedColor);
+        unlockedBadges.clear(); lastMotivBucket=-1; goalCompleted=false;
         MILESTONES.forEach(m=>{const el=document.getElementById(m.id);el.classList.remove('unlocked','pop');});
         setMode('daily');
     }
 
-    function newGoal(){activeGoalId=null;clearForm();renderGoalsList();document.getElementById('goalName').focus();}
+    function newGoal(){ activeGoalId=null; clearForm(); renderGoalsList(); document.getElementById('goalName').focus(); }
 
-    function selectGoal(id){
-        const goal=loadGoals().find(g=>g.id===id);
-        if(goal){loadFormData(goal);renderGoalsList();calculate();}
-    }
+    function selectGoal(id){ const goal=loadGoals().find(g=>g.id===id); if(goal){loadFormData(goal);renderGoalsList();calculate();} }
 
-    function getPercent(goal){const t=parseFloat(goal.target),c=parseFloat(goal.current);if(!(t>0&&c>=0))return 0;return Math.min((c/t)*100,100);}
+    function getPercent(goal){ const t=parseFloat(goal.target),c=parseFloat(goal.current); if(!(t>0&&c>=0))return 0; return Math.min((c/t)*100,100); }
 
     function renderGoalsList(){
         const goals=loadGoals(),list=document.getElementById('goalsList');
         if(goals.length===0){list.innerHTML='<div class="empty-state">Henüz hedef eklenmedi.</div>';return;}
-        const sym = c => SYMBOLS[c]||c;
         list.innerHTML=goals.map(g=>{
-            const pct=getPercent(g).toFixed(0);
-            const isActive=g.id===activeGoalId;
-            const color=g.color||PALETTE[7];
-            const currency=sym(g.currency||'TL');
+            const pct=getPercent(g).toFixed(0),isActive=g.id===activeGoalId,color=g.color||PALETTE[7],sym=SYMBOLS[g.currency||'TL']||g.currency;
             return `<div class="goal-chip ${isActive?'active':''}" onclick="selectGoal('${g.id}')">
                 <div class="chip-dot" style="background:${color}"></div>
                 <div class="chip-left">
                     <span class="chip-name">${g.name}</span>
-                    <span class="chip-sub">${fmt(g.current||0)} / ${fmt(g.target||0)} ${currency}</span>
+                    <span class="chip-sub">${fmt(g.current||0)} / ${fmt(g.target||0)} ${sym}</span>
                 </div>
                 <div class="chip-right">
                     <span class="chip-percent" style="background:${color}22;color:${color}">%${pct}</span>
@@ -669,6 +640,5 @@
 
     renderGoalsList();
 </script>
-
 </body>
 </html>
